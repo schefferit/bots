@@ -1242,10 +1242,10 @@ warpToMiningSite context =
     useContextMenuCascadeOnListSurroundingsButton
         (case context.eventContext.botSettings.miningSiteLocation of
             Nothing ->
-                useMenuEntryWithTextContaining "asteroid belts"
-                    (useRandomMenuEntry (context.randomIntegers |> List.head |> Maybe.withDefault 0)
-                        (useMenuEntryWithTextContaining "Warp to"
-                            (useMenuEntryWithTextContaining "Within 0 m" menuCascadeCompleted)
+                useMenuEntryWithTextContaining "Anomalies"
+                    (useMenuEntryWithTextContainingFirstOf ([ "White", "Cluster" ])
+                        (useMenuEntryWithTextContaining "Warp to Within"
+                         (useMenuEntryWithTextContaining "Within 0 m" menuCascadeCompleted)
                         )
                     )
 
