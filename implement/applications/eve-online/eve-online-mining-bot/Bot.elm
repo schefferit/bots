@@ -1243,7 +1243,7 @@ warpToMiningSite context =
         (case context.eventContext.botSettings.miningSiteLocation of
             Nothing ->
                 useMenuEntryWithTextContaining "Anomalies"
-                    (useMenuEntryWithTextContainingFirstOf ([ "White", "Cluster" ])
+                    (useMenuEntryWithTextContainingFirstOf ([ "White", "Glacial", "Cluster", "Clear", "Blue", "Glare", "Dark" ])
                         (useMenuEntryWithTextContaining "Warp to Within"
                          (useMenuEntryWithTextContaining "Within 0 m" menuCascadeCompleted)
                         )
