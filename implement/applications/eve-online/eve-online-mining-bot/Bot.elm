@@ -113,7 +113,7 @@ defaultBotSettings =
     , dockWhenWithoutDrones = Nothing
     , repairBeforeUndocking = Nothing
     , targetingRange = 8000
-    , miningModuleRange = 5000
+    , miningModuleRange = 9500
     , botStepDelayMilliseconds = { minimum = 1300, maximum = 1500 }
     , selectInstancePilotName = Nothing
     , includeAsteroidPatterns = []
