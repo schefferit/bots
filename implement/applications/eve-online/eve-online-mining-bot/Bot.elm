@@ -804,27 +804,26 @@ modulesToActivateAlwaysActivated context inventoryWindowWithMiningHoldSelected =
                                                         nextTarget
                                                          { whenInRange =
                                                             startDroneMining context
-                                                               |> Maybe.andThen
-                                                               |> Maybe.withDefault
-                                                                    (case knownMiningModules |> List.filter (.isActive >> Maybe.withDefault False >> not) |> List.head of
-                                                                        Nothing ->
-                                                                            describeBranch
-                                                                                (if knownMiningModules == [] then
-                                                                                    "Found no mining modules so far."
+                                                                |> Maybe.andThen (\_ -> 
+                                                                    case inactiveModules of
+                                                                        [] ->
+                                                                            Just <|
+                                                                                describeBranch
+                                                                                    (if knownMiningModules == [] then
+                                                                                        "Found no mining modules so far."
+                                                                                     else
+                                                                                        "All known mining modules found so far are active."
+                                                                                    )
+                                                                                    (readShipUIModuleButtonTooltips context
+                                                                                        |> Maybe.withDefault waitForProgressInGame
+                                                                                    )
 
-                                                                                else
-                                                                                    "All known mining modules found so far are active."
-                                                                                )
-                                                                                (readShipUIModuleButtonTooltips context
-                                                                                    |> Maybe.withDefault waitForProgressInGame
-                                                                                )
-
-                                                                        Just inactiveModule ->
-                                                                            describeBranch "I see an inactive mining module. Activate it."
-                                                                                (Just (clickModuleButtonButWaitIfClickedInPreviousStep context inactiveModule)
-                                                                                    |> Maybe.withDefault waitForProgressInGame
-                                                                                )
-                                                                    )
+                                                                        inactiveModule :: _ ->
+                                                                            Just <|
+                                                                                describeBranch "I see an inactive mining module. Activate it."
+                                                                                    (clickModuleButtonButWaitIfClickedInPreviousStep context inactiveModule)
+                                                                )
+                                                                |> Maybe.withDefault waitForProgressInGame
                                                         }
                                                     )
                                                 )
