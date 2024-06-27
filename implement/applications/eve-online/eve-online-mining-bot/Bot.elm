@@ -802,28 +802,28 @@ modulesToActivateAlwaysActivated context inventoryWindowWithMiningHoldSelected =
                                                     (ensureTargetIsInMiningRange
                                                         context
                                                         nextTarget
-                                                        { whenInRange =
-                                                            case knownMiningModules |> List.filter (.isActive >> Maybe.withDefault False >> not) |> List.head of
-                                                                Nothing ->
-                                                                    describeBranch
-                                                                        (if knownMiningModules == [] then
-                                                                            "Found no mining modules so far."
+                                                         { whenInRange =
+                                                            startDroneMining context
+                                                                |> Maybe.withDefault
+                                                                    (case knownMiningModules |> List.filter (.isActive >> Maybe.withDefault False >> not) |> List.head of
+                                                                        Nothing ->
+                                                                            describeBranch
+                                                                                (if knownMiningModules == [] then
+                                                                                    "Found no mining modules so far."
 
-                                                                         else
-                                                                            "All known mining modules found so far are active."
-                                                                        )
-                                                                        (readShipUIModuleButtonTooltips context
-                                                                            |> Maybe.withDefault waitForProgressInGame
-                                                                        )
+                                                                                else
+                                                                                    "All known mining modules found so far are active."
+                                                                                )
+                                                                                (readShipUIModuleButtonTooltips context
+                                                                                    |> Maybe.withDefault waitForProgressInGame
+                                                                                )
 
-                                                                Just inactiveModule ->
-                                                                    describeBranch "I see an inactive mining module. Activate it."
-                                                                        (startDroneMining context
-                                                                            |> Maybe.withDefault
+                                                                        Just inactiveModule ->
+                                                                            describeBranch "I see an inactive mining module. Activate it."
                                                                                 (Just (clickModuleButtonButWaitIfClickedInPreviousStep context inactiveModule)
                                                                                     |> Maybe.withDefault waitForProgressInGame
                                                                                 )
-                                                                        )
+                                                                    )
                                                         }
                                                     )
                                                 )
