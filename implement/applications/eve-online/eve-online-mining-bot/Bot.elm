@@ -804,26 +804,24 @@ modulesToActivateAlwaysActivated context inventoryWindowWithMiningHoldSelected =
                                                         nextTarget
                                                          { whenInRange =
                                                             startDroneMining context
-                                                                |> Maybe.andThen (\_ -> 
-                                                                    case inactiveModules of
+                                                                |> Maybe.withDefault
+                                                                    (case inactiveModules of
                                                                         [] ->
-                                                                            Just <|
-                                                                                describeBranch
-                                                                                    (if knownMiningModules == [] then
-                                                                                        "Found no mining modules so far."
-                                                                                     else
-                                                                                        "All known mining modules found so far are active."
-                                                                                    )
-                                                                                    (readShipUIModuleButtonTooltips context
-                                                                                        |> Maybe.withDefault waitForProgressInGame
-                                                                                    )
+                                                                            describeBranch
+                                                                                (if knownMiningModules == [] then
+                                                                                    "Found no mining modules so far."
+
+                                                                                 else
+                                                                                    "All known mining modules found so far are active."
+                                                                                )
+                                                                                (readShipUIModuleButtonTooltips context
+                                                                                    |> Maybe.withDefault waitForProgressInGame
+                                                                                )
 
                                                                         inactiveModule :: _ ->
-                                                                            Just <|
-                                                                                describeBranch "I see an inactive mining module. Activate it."
-                                                                                    (clickModuleButtonButWaitIfClickedInPreviousStep context inactiveModule)
-                                                                )
-                                                                |> Maybe.withDefault waitForProgressInGame
+                                                                            describeBranch "I see an inactive mining module. Activate it."
+                                                                                (clickModuleButtonButWaitIfClickedInPreviousStep context inactiveModule)
+                                                                    )
                                                         }
                                                     )
                                                 )
