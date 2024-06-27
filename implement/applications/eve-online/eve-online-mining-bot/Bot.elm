@@ -804,7 +804,7 @@ modulesToActivateAlwaysActivated context inventoryWindowWithMiningHoldSelected =
                                                         nextTarget
                                                           { whenInRange =
                                                              startDroneMining context 
-                                                              |> Maybe.withDefault(
+                                                              |> Maybe.andThen(
 
                                                             case knownMiningModules |> List.filter (.isActive >> Maybe.withDefault False >> not) |> List.head of
                                                                 Nothing ->
