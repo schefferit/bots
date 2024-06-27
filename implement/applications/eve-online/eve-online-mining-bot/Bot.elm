@@ -818,10 +818,10 @@ modulesToActivateAlwaysActivated context inventoryWindowWithMiningHoldSelected =
 
                                                                 Just inactiveModule ->
                                                                     describeBranch "I see an inactive mining module. Activate it."
-                                                                    (startDroneMining context 
-                                                                        |> Maybe.withDefault
-                                                                        (clickModuleButtonButWaitIfClickedInPreviousStep context inactiveModule)
-                                                                    )
+                                                                     (clickModuleButtonButWaitIfClickedInPreviousStep context inactiveModule
+                                                                       |> Maybe.withDefault
+                                                                        (startDroneMining context)
+                                                                     )  
                                                         }
                                                         
                                                     )
