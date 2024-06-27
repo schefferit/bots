@@ -818,9 +818,9 @@ modulesToActivateAlwaysActivated context inventoryWindowWithMiningHoldSelected =
 
                                                                 Just inactiveModule ->
                                                                     describeBranch "I see an inactive mining module. Activate it."
-                                                                        (clickModuleButtonButWaitIfClickedInPreviousStep context inactiveModule
+                                                                        (startDroneMining context
                                                                             |> Maybe.withDefault
-                                                                                (startDroneMining context
+                                                                                (Just (clickModuleButtonButWaitIfClickedInPreviousStep context inactiveModule)
                                                                                     |> Maybe.withDefault waitForProgressInGame
                                                                                 )
                                                                         )
@@ -1373,6 +1373,7 @@ returnDronesToBay context =
                         )
             )
 
+-- Define startDroneMining function
 startDroneMining : BotDecisionContext -> Maybe DecisionPathNode
 startDroneMining context =
     context.readingFromGameClient.dronesWindow
@@ -1397,7 +1398,7 @@ startDroneMining context =
                                 context
                             )
                         )
-            )            
+            )           
 
 
 readShipUIModuleButtonTooltips : BotDecisionContext -> Maybe DecisionPathNode
