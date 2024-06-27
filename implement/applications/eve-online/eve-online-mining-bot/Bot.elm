@@ -803,7 +803,7 @@ modulesToActivateAlwaysActivated context inventoryWindowWithMiningHoldSelected =
                                                         context
                                                         nextTarget
                                                           { whenInRange =
-                                                            Maybe.withDefalt(
+                                                            Maybe.withDefault(
                                                                 launchDrones context 
                                                               |> Maybe.withDefault(
 
