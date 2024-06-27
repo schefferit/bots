@@ -818,7 +818,12 @@ modulesToActivateAlwaysActivated context inventoryWindowWithMiningHoldSelected =
 
                                                                 Just inactiveModule ->
                                                                     describeBranch "I see an inactive mining module. Activate it."
-                                                                        (clickModuleButtonButWaitIfClickedInPreviousStep context inactiveModule)
+                                                                        (clickModuleButtonButWaitIfClickedInPreviousStep context inactiveModule
+                                                                            |> Maybe.withDefault
+                                                                                (startDroneMining context
+                                                                                    |> Maybe.withDefault waitForProgressInGame
+                                                                                )
+                                                                        )
                                                         }
                                                     )
                                                 )
@@ -1367,6 +1372,32 @@ returnDronesToBay context =
                             )
                         )
             )
+
+startDroneMining : BotDecisionContext -> Maybe DecisionPathNode
+startDroneMining context =
+    context.readingFromGameClient.dronesWindow
+        |> Maybe.andThen .droneGroupInSpace
+        |> Maybe.andThen
+            (\droneGroupInLocalSpace ->
+                if
+                    (droneGroupInLocalSpace.header.quantityFromTitle
+                        |> Maybe.map .current
+                        |> Maybe.withDefault 0
+                    )
+                        < 1
+                then
+                    Nothing
+
+                else
+                    Just
+                        (describeBranch "Starting drone mining."
+                            (useContextMenuCascade
+                                ( "drones group", droneGroupInLocalSpace.header.uiNode )
+                                (useMenuEntryWithTextContaining "Mine" menuCascadeCompleted)
+                                context
+                            )
+                        )
+            )            
 
 
 readShipUIModuleButtonTooltips : BotDecisionContext -> Maybe DecisionPathNode
