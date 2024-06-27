@@ -803,7 +803,7 @@ modulesToActivateAlwaysActivated context inventoryWindowWithMiningHoldSelected =
                                                         context
                                                         nextTarget
                                                           { whenInRange =
-                                                             launchDrones context 
+                                                             startDroneMining context 
                                                               |> Maybe.withDefault(
 
                                                             case knownMiningModules |> List.filter (.isActive >> Maybe.withDefault False >> not) |> List.head of
