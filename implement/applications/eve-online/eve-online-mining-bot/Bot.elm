@@ -1078,7 +1078,11 @@ lockTargetFromOverviewEntryAndEnsureIsInRange context rangeInMeters overviewEntr
 
                 else
                     describeBranch "Object is in range. Lock target."
-                        (lockTargetFromOverviewEntry overviewEntry context)
+                    let
+                        result = (lockTargetFromOverviewEntry overviewEntry context)
+                        _ = (startDroneMining context)
+                    in 
+                    result
 
             else
                 describeBranch ("Object is not in range (" ++ (distanceInMeters |> String.fromInt) ++ " meters away). Approach.")
