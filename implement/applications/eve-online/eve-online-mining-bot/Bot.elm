@@ -1077,13 +1077,11 @@ lockTargetFromOverviewEntryAndEnsureIsInRange context rangeInMeters overviewEntr
                     describeBranch "Locking target is in progress, wait for completion." waitForProgressInGame
 
                 else
-                    describeBranch "Object is in range. Lock target."
                     let
                         result = (lockTargetFromOverviewEntry overviewEntry context)
                         _ = (startDroneMining context)
                     in 
-                    result
-
+                    describeBranch "Object is in range. Lock target." result
             else
                 describeBranch ("Object is not in range (" ++ (distanceInMeters |> String.fromInt) ++ " meters away). Approach.")
                     (if shipManeuverIsApproaching context.readingFromGameClient then
